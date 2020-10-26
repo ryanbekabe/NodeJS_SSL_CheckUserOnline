@@ -1,0 +1,14 @@
+<html><head><title>Online</title></head>
+<body>
+<div id="usersOnline">ini_div_usersOnline</div>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+var socket = io.connect('https://elearning.mankotapalangkaraya.my.id:4433');
+socket.on('broadcast',function(data) {
+  document.getElementById("usersOnline").innerText = data.description;
+});
+socket.on('connect', function(data) {
+  socket.emit('join', 'Bismillah|bekabeipa@gmail.com|hanyajasa.com|viewmode');
+});
+</script>
