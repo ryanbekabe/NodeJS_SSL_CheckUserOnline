@@ -1,7 +1,3 @@
-var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-var datetime = date + ' ' + time;
 var fs = require('fs')
 var express = require('express');
 var app = express();
@@ -18,13 +14,46 @@ server.listen(port, () => {
 });
 app.use(express.static(path.join(__dirname, 'public')));
 var clients = 0;
+
 io.on('connection', function (client) {
         clients++;
+		var date = new Date();
+		var h = date.getHours(); // 0 - 23
+		var m = date.getMinutes(); // 0 - 59
+		var s = date.getSeconds(); // 0 - 59
+		var session = "AM";
+		if(h == 0){
+			h = 12;
+		}
+		if(h > 12){
+			h = h - 12;
+			session = "PM";
+		}
+		h = (h < 10) ? "0" + h : h;
+		m = (m < 10) ? "0" + m : m;
+		s = (s < 10) ? "0" + s : s;
+		var time = h + ":" + m + ":" + s + " " + session;
         io.emit('broadcast',{ description: clients + ' online.'});
-        console.log('Client connect! ' + clients + ' online. @' + datetime);
+        console.log('Client connect! ' + clients + ' online. @' + String(time));
         client.on('disconnect', function () {
                 clients--;
+				var date = new Date();
+				var h = date.getHours();
+				var m = date.getMinutes();
+				var s = date.getSeconds();
+				var session = "AM";
+				if(h == 0){
+					h = 12;
+				}
+				if(h > 12){
+					h = h - 12;
+					session = "PM";
+				}
+				h = (h < 10) ? "0" + h : h;
+				m = (m < 10) ? "0" + m : m;
+				s = (s < 10) ? "0" + s : s;
+				var time = h + ":" + m + ":" + s + " " + session;
                 io.emit('broadcast',{ description: clients + ' clients connected!'});
-                console.log('Client disconnect! ' + clients + ' online! @' + datetime);
+                console.log('Client disconnect! ' + clients + ' online! @' + String(time));
         });
 });
