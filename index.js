@@ -1,4 +1,7 @@
-// Setup basic express server
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var datetime = date + ' ' + time;
 var fs = require('fs')
 var express = require('express');
 var app = express();
@@ -16,11 +19,12 @@ server.listen(port, () => {
 app.use(express.static(path.join(__dirname, 'public')));
 var clients = 0;
 io.on('connection', function (client) {
-	clients++;
-	io.emit('broadcast',{ description: clients + ' online.'});
-	client.on('disconnect', function () {
-		clients--;
-		io.emit('broadcast',{ description: clients + ' clients connected!'});
-		console.log('Client disconnect! ' + clients + ' online!');
-	});
+        clients++;
+        io.emit('broadcast',{ description: clients + ' online.'});
+        console.log('Client connect! ' + clients + ' online. @' + datetime);
+        client.on('disconnect', function () {
+                clients--;
+                io.emit('broadcast',{ description: clients + ' clients connected!'});
+                console.log('Client disconnect! ' + clients + ' online! @' + datetime);
+        });
 });
