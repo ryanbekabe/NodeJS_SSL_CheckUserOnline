@@ -4,11 +4,14 @@
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-var socket = io.connect('https://elearning.mankotapalangkaraya.my.id:4433');
+//var namaweb = 'https://elearning.mankotapalangkaraya.my.id:4433';
+var namaweb = 'https://rek.my.id:4434';
+
+var socket = io.connect(namaweb);
 socket.on('broadcast',function(data) {
   document.getElementById("usersOnline").innerText = data.description;
 });
 socket.on('connect', function(data) {
-  socket.emit('join', 'Bismillah|bekabeipa@gmail.com|hanyajasa.com|viewmode');
+  socket.emit('join', 'Bismillah|bekabeipa@gmail.com|hanyajasa.com');
 });
 </script>
