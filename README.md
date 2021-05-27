@@ -3,7 +3,7 @@
 ```git
 
 git clone https://github.com/ryanbekabe/NodeJS_SSL_CheckUserOnline.git
-apt intstall npm
+apt install npm
 npm install
 * * * * * cd /home/NodeJS_SSL_CheckUserOnline && node index
 a2enmod substitute
